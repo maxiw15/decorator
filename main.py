@@ -3,14 +3,13 @@ from functools import wraps
 from datetime import datetime
 
 
-# Доработать декоратор logger в коде ниже. Должен получиться декортор,
-# который записывает в файл 'main.log' дату и время вызова функции,
-# имя функции, аргументы, с которыми вызвалась и возвращаемое значение
-
 def logger(old_function):
     @wraps(old_function)
     def new_function(*args, **kwargs):
         result = old_function(*args, **kwargs)
+        if not os.path.exists('main.log'):
+            x = open('main.log', "w")
+            x.close()
         with open('main.log', "a") as log_file:
             log_file.write(f'Вызываем функцию {old_function.__name__}, время {datetime.now()}, c аргументами {args} и '
                            f'{kwargs} вывод {result} \n')
